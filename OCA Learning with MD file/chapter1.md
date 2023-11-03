@@ -540,3 +540,76 @@ The answer here is that it does compile because the code starts below the import
 
 For this one, you would answer "Does not compile." Since the code begins with line 1, you don't get to assume that valid imports were provided earlier. The exam will let you know what package classes are in unless they're covered in the objectives. You'll be expected to know that `ArrayList` is in `java.util`--at least you will once you get to Chapter 3 of this book!  
 You'll als0 see code that doesn't have `main()` method. When this happens, assume the `main()` method, class definition, and all necessary imports are present. You're just being asked if the part of the code you're shown compiles when dropped into valid surrounding code.
+
+## Creating Objects
+
+Our programs wouldn't be able to do anything useful if we didn't have the ability to create new objects. Remember that an object is an instance of a class. In the following sections, we'll look at constructors, object fields, instance initializers, and the order in which values are initialized.
+
+### Constructors
+
+To create an instance of a class, all you have to do is write `new` before it. For example:
+
+```java
+Random r = new Random();
+```
+
+First you declare the type that you'll be creating `(Random)` and give the variable a name `(r)`. This gives Java a place to store a reference to the object. Then you write `new Random()` to actually create the object.  
+`Random()` looks like a method since it is followed by parentheses. It's called a _constructor_, which is special type of method that creates new object. Now it's time to define a constructor of your own:
+
+```java
+public class Chick {
+    public Chick(){
+        System.out.println("in constructor");
+    }
+}
+```
+
+There are two key points to note about the constructor: the name of the constructor matches the name of the class, and there's no return type. You'll likely see a method like this on the exam:
+
+```java
+public void Chick() {} // NOT A CONSTRUCTOR
+```
+
+When you see a method name beginning with a capital letter and having a return type, pay special attention to it. It is _not_ a constructor since there's a return type. It's a regular method that won't be called when you write `new Chick()`.  
+The purpose of a constructor is to initialize fields, althought you can put any code in there. Another way to initialize fields is to do so directly on the line on which they're declared. This example shows both approaches:
+
+```java
+public class Chicken {
+    int numEggs = 0; // initialize on line
+    String name;
+    public Chicken() {
+        name = "Duke" // initialize in constructor
+    }
+}
+```
+
+For most classes, you don't have to code a constructor--the compiler will supply a "do nothing" default constructor for you. There's one scenario that requires you to declare a constructor that you'll learn about Chapter 5.
+
+### Reading and Writing Object Fields
+
+It's possible to read and write instance variables directly from the caller. In this exmaple, a mother swan lay eggs:
+
+```java
+public class Swan {
+    int numberEggs; // instance variable
+    public static void main(String[] arg) {
+        Swan mother = new Swan();
+        mother.numberEggs = 1; // set variable
+        System.out.println(mother.numberEggs); //read variable
+    }
+}
+```
+
+Reading a variable is known as _getting_ it. The class gets `numberEggs` directly to print it out. Writing to a variable is known _setting_ it. This class sets `numberEggs` to 1.  
+In Chapter 4, you'll learn how to protect the `Swan` class from having someone set a negative number of eggs.  
+You can even read and write fields directly on the line declaring them:
+
+```java
+1: public class Name {
+2:     String first = "Theodore";
+3:     String last = "Moose";
+4:     String full = first + last;
+5: }
+```
+
+Lines 2 and 3 both write to fields. Line 4 does both. It reads the fields `first` and `last`. It then writes the field `full`.
